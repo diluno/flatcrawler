@@ -35,6 +35,9 @@ var c = new Crawler({
               title: flat.title,
               link: flat.link
             },
+            {
+              upsert: true
+            },
             (err, res) => {
               if(err) throw err;
             }
