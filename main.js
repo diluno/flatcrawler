@@ -1,6 +1,9 @@
 const Crawler = require('crawler');
 const MongoClient = require('mongodb').MongoClient;
 const fs = require('fs');
+const Handlebars = require('handlebars');
+const moment = require('moment');
+const templateSrc = fs.readFileSync('./template.html', 'utf8');
 
 const url = 'mongodb://localhost:27017';
 
@@ -47,8 +50,8 @@ var c = new Crawler({
         const flatColl = db.collection('ronorp');
         flatColl.find({}).toArray((err, docs) => {
           if(!docs) return;
-          let d = docs.reverse();
-          writeHtml(d);
+          // let d = docs.reverse();
+          writeHtml(docs);
         });
         
         client.close();
@@ -60,11 +63,13 @@ var c = new Crawler({
 
 function writeHtml(docs) {
   if(!docs) return;
-  let html = '';
-  docs.forEach(doc => {
-    html += '<a href="' + doc.link + '">' + doc.title + '</a><br>\n';
+  let template = Handlebars.compile(templateSrc);
+  let now = moment().format('MMMM Do YYYY, h:mm:ss a');
+  let result = template({
+    docs: docs,
+    updateTime: now
   });
-  fs.writeFile('index.html', html, (err) => {
+  fs.writeFile('index.html', result, (err) => {
     if(err) return console.log(err);
     console.log('HTML written');
   })
