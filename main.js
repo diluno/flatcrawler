@@ -57,6 +57,7 @@ var c = new Crawler({
 });
 
 function writeHtml(docs) {
+  if(!docs) return;
   let html = '';
   docs.forEach(doc => {
     html += '<a href="' + doc.link + '">' + doc.title + '</a><br>\n';
