@@ -9,30 +9,40 @@
         body {
             font-family: Helvetica;
         }
+        .lists {
+            display: flex;
+        }
         ul {
             margin: 0;
+            margin-right: 1rem;
             padding: 0;
             list-style-type: none;
         }
         li {
             display: block;
-            padding: .5rem;
+            padding: 1rem;
             border: 1px solid #ddd;
             margin: .5rem 0;
         }
         li span {
             font-size: .9rem;
-            margin-left: 1rem;
             color: #666;
         }
     </style>
 </head>
 <body>
-    <h3>Last update: {{ updateTime }}</h3>
-    <ul>
+    <h2>Last update: {{ updateTime }}</h2>
+    <div class="lists">
         {{#each docs}}
-        <li><a href="{{ this.link }}">{{ this.title }}</a><span>{{ this.formattedTimestamp }}</span></li>
+        <div class="list-item">
+            <h3>{{this.title}}</h3>
+            <ul>
+                {{#each this.flats}}
+                <li><span>{{ this.formattedTimestamp }}</span><br><a href="{{ this.link }}">{{ this.title }}</a></li>
+                {{/each}}
+            </ul>
+        </div>
         {{/each}}
-    </ul>
+    </div>
 </body>
 </html>
