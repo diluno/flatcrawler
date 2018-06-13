@@ -5,12 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Flatzzz</title>
+    <style>
+        body {
+            font-family: Helvetica;
+        }
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+        li {
+            display: block;
+            padding: .5rem;
+            border: 1px solid #ddd;
+            margin: .5rem 0;
+        }
+        li span {
+            font-size: .9rem;
+            margin-left: 1rem;
+            color: #666;
+        }
+    </style>
 </head>
 <body>
     <h3>Last update: {{ updateTime }}</h3>
     <ul>
         {{#each docs}}
-        <li><a href="{{ this.link }}">{{ this.title }}</a></li>
+        <li><a href="{{ this.link }}">{{ this.title }}</a><span>{{ this.formattedTimestamp }}</span></li>
         {{/each}}
     </ul>
 </body>

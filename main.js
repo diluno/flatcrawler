@@ -30,13 +30,21 @@ var c = new Crawler({
       MongoClient.connect(url, function (err, client) {
         console.log('Connected to server. Flats: ' + flats.length);
 
+        const timestamp = new Date();
+        const formattedTimestamp = moment().format('MMMM Do YYYY, h:mm:ss a');
         const db = client.db('flats');
         flats.forEach((flat) => {
           db.collection('ronorp').update(
             { _id: flat._id },
             {
-              title: flat.title,
-              link: flat.link
+              $set: {
+                title: flat.title,
+                link: flat.link
+              },
+              $setOnInsert: {
+                timestamp: timestamp,
+                formattedTimestamp: formattedTimestamp
+              }
             },
             {
               upsert: true
@@ -48,7 +56,7 @@ var c = new Crawler({
         });
 
         const flatColl = db.collection('ronorp');
-        flatColl.find({}).toArray((err, docs) => {
+        flatColl.find({}).sort({timestamp: -1}).toArray((err, docs) => {
           if(!docs) return;
           // let d = docs.reverse();
           writeHtml(docs);
