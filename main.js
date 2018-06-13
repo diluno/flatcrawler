@@ -20,7 +20,7 @@ var c = new Crawler({
         let foo = {};
         foo.title = $link.text().substr(2).trim();
         foo.link = $link.attr('href');
-        foo._id = $(entry).attr('id');
+        foo._id = makeHash(foo.title);
         flats.push(foo);
       });
 
@@ -46,7 +46,9 @@ var c = new Crawler({
 
         const flatColl = db.collection('ronorp');
         flatColl.find({}).toArray((err, docs) => {
-          writeHtml(docs);
+          if(!docs) return;
+          let d = docs.reverse();
+          writeHtml(d);
         });
         
         client.close();
@@ -66,6 +68,17 @@ function writeHtml(docs) {
     if(err) return console.log(err);
     console.log('HTML written');
   })
+}
+
+function makeHash(string) {
+  var hash = 0, i, chr;
+  if (string.length === 0) return hash;
+  for (i = 0; i < string.length; i++) {
+    chr = string.charCodeAt(i);
+    hash = ((hash << 5) - hash) + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
 }
 
 // c.queue('https://www.ronorp.net/zuerich/immobilien/wohnung-zuerich.1219');
