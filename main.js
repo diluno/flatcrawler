@@ -37,7 +37,7 @@ modules.forEach(module => {
       MongoClient.connect(url, function (err, client) {
 
         const timestamp = new Date();
-        const formattedTimestamp = moment().format('MMMM Do YYYY, h:mm:ss a');
+        const formattedTimestamp = moment().format('MMMM Do YYYY, HH:mm');
         const db = client.db('flats');
         flats.forEach((flat) => {
         db.collection(module.db).update(
@@ -81,7 +81,7 @@ modules.forEach(module => {
 function writeHtml() {
   if (!flatDocs) return;
   let template = Handlebars.compile(templateSrc);
-  let now = moment().format('MMMM Do YYYY, h:mm:ss a');
+  let now = moment().format('MMMM Do YYYY, HH:mm');
   let result = template({
     docs: flatDocs,
     updateTime: now
