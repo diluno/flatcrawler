@@ -1,6 +1,6 @@
 module.exports = {
   db: 'homegate',
-  uri: 'https://www.homegate.ch/mieten/immobilien/plz/trefferliste?ag=1000&ah=2000&ac=2&ad=3.5&tab=list&o=sortToplisting-desc&ao=8003,8004',
+  uri: 'https://www.homegate.ch/mieten/immobilien/plz/trefferliste?ag=1000&ah=2000&ac=2&ad=3.5&tab=list&o=sortToplisting-desc&ao=8003,8004,8005,8006,8002,8057',
   parse: ($, makeHash) => {
     let flats = [];
     const entries = $('.detail-page-link');
