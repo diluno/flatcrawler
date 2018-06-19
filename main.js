@@ -34,7 +34,7 @@ modules.forEach(module => {
       let flats = module.parse($, makeHash);
       console.log('Module: ' + module.db + ', Flats found: ' + flats.length);
 
-      MongoClient.connect(url, function (err, client) {
+      MongoClient.connect(url, (err, client) => {
 
         const timestamp = new Date();
         const formattedTimestamp = moment().format('MMMM Do YYYY, HH:mm');
@@ -62,24 +62,25 @@ modules.forEach(module => {
         });
 
         const flatColl = db.collection(module.db);
-        flatColl.find({}).sort({timestamp: -1}).toArray((err, docs) => {
+        flatColl.find().sort({timestamp: -1}).toArray((err, docs) => {
           console.log(docs.length);
           flatDocs.push({
             title: module.db,
             flats: docs
           });
           count++;
-          if(count == modules.length) writeHtml();
+          if(count == modules.length) {
+            writeHtml(client);
+          }
         });
         
-        client.close();
       });
     }
   }]);
 });
 
 
-function writeHtml() {
+function writeHtml(client) {
   if (!flatDocs) return;
   let template = Handlebars.compile(templateSrc);
   let now = moment().format('MMMM Do YYYY, HH:mm');
@@ -90,6 +91,10 @@ function writeHtml() {
   fs.writeFile('index.html', result, (err) => {
     if(err) return console.log(err);
     console.log('HTML written');
+    client.close(() => {
+      console.log('DB Closed');
+      process.exit();
+    });
   })
 }
 
