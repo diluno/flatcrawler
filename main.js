@@ -63,6 +63,7 @@ modules.forEach(module => {
 
         const flatColl = db.collection(module.db);
         flatColl.find({}).sort({timestamp: -1}).toArray((err, docs) => {
+          console.log(docs.length);
           flatDocs.push({
             title: module.db,
             flats: docs
