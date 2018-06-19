@@ -5,6 +5,7 @@ module.exports = {
     let flats = [];
     const entries = $('._228GQ');
     entries.each((i, entry) => {
+      if ($(entry).hasClass('McRdh')) return;
       const $link = $(entry).find('a.nogEW');
       let foo = {};
       foo.title = $link.find('h4').text();
