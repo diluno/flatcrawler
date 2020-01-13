@@ -25,8 +25,8 @@ var c = new Crawler({
 
 let count = 0;
 
-modules.forEach(module => {
-  console.log(module.db);
+modules.forEach(module => {
+  console.log(module);
   c.queue([{
     uri: module.uri,
     callback: (err, res, done) => {
