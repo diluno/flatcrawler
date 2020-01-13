@@ -6,7 +6,7 @@ module.exports = {
     const entries = $('._1MojO');
     entries.each((i, entry) => {
       if ($(entry).hasClass('VXTED')) return;
-      const $link = $(entry).find('a._2ap2R');
+      const $link = $(entry).find('a._16dGT');
       let foo = {};
       foo.title = $link.find('h4').text();
       foo.link = 'https://www.tutti.ch' + $link.attr('href');
