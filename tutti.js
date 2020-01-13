@@ -3,10 +3,10 @@ module.exports = {
   uri: 'https://www.tutti.ch/de/li/zuerich/zuerich/immobilien/wohnungen/mieten?pe=2000',
   parse: ($, makeHash) => {
     let flats = [];
-    const entries = $('._228GQ');
+    const entries = $('._1MojO');
     entries.each((i, entry) => {
-      if ($(entry).hasClass('McRdh')) return;
-      const $link = $(entry).find('a.nogEW');
+      if ($(entry).hasClass('VXTED')) return;
+      const $link = $(entry).find('a._16dGT');
       let foo = {};
       foo.title = $link.find('h4').text();
       foo.link = 'https://www.tutti.ch' + $link.attr('href');
